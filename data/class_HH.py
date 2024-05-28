@@ -1,6 +1,5 @@
 import requests
 from abc import ABC
-from data.class_Vacancy import Vacancy
 
 
 class Parser(ABC):
@@ -9,7 +8,7 @@ class Parser(ABC):
         pass
 
 
-class HH_API(Parser):
+class HHApi(Parser):
     """
     Класс для работы с API HeadHunter
     Класс Parser является родительским классом, который вам необходимо реализовать
@@ -32,21 +31,9 @@ class HH_API(Parser):
             self.vacancies.extend(vacancies)
             self.params['page'] += 1
 
-        vacancies_objects = []
-        for item in self.vacancies:
-            vacancies_objects.append(
-                Vacancy(
-                    title=item.get('name'),
-                    url=item.get('alternate_url'),
-                    schedule=item.get('schedule').get('name'),
-                    salary=(item.get('salary')
-                            )
-                )
-            )
-        return vacancies_objects
+        return self.vacancies
 
 
 if __name__ == '__main__':
-    hh_1 = HH_API()
+    hh_1 = HHApi()
     vac_hh_1 = hh_1.get_vacancies('python')
-    print(vac_hh_1[0:5])

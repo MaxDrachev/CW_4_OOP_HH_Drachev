@@ -1,16 +1,13 @@
 import json
 import os
-from data.class_HH import HH_API
+from data.class_HH import HHApi
 from config import ROOT_DIR
 
 
 class JSONSaver:
     """
     Класс для сохранения данных о вакансиях в формате JSON в файл.
-
-    Методы:
-      dump_to_file(vacancies, filename, directory): Сохраняет список вакансий в файл JSON.
-        Принимает список вакансий, имя файла и директорию для сохранения.
+    Принимает список вакансий, имя файла и директорию для сохранения.
     """
 
     def dump_to_file(self, vacancies_objects, filename="vacancies.json"):
@@ -31,5 +28,5 @@ class JSONSaver:
 
 
 if __name__ == '__main__':
-    vac = HH_API().get_vacancies("python")
+    vac = HHApi().get_vacancies("python")
     JSONSaver().dump_to_file(vac)

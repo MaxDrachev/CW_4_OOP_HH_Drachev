@@ -8,7 +8,7 @@ class Vacancy:
     Includes methods  for comparing Vacancy objects based on their starting salary for sorting purposes.
     """
 
-    def __init__(self, name, url, description, salary_from, salary_to, currency):
+    def __init__(self, name, url, description, area, salary_from, salary_to, currency):
         """
         Initializes a new Vacancy object.
 
@@ -22,6 +22,7 @@ class Vacancy:
         self.name = name
         self.url = url
         self.description = description
+        self.area = area
         self.salary_from = salary_from
         self.salary_to = salary_to
         self.currency = currency
@@ -33,6 +34,7 @@ class Vacancy:
         :return: Human-readable string representation of the Vacancy.
         """
         return f'Вакансия: {self.name}\n' \
+               f'Город: {self.area}\n' \
                f'Требования: {self.description}\n' \
                f'Зарплата от {self.salary_from} до {self.salary_to} {self.currency}\n'
 
@@ -45,6 +47,8 @@ class Vacancy:
 
         :return: Vacancy object initialized with data from the JSON item.
         """
+        area_info = json_item.get('area')
+        area = area_info['name'] if area_info and 'name' in area_info else None
         salary_info = json_item.get('salary')
         salary_from = salary_info['from'] if salary_info and 'from' in salary_info else 0
         salary_to = salary_info['to'] if salary_info and 'to' in salary_info else 0
@@ -54,6 +58,7 @@ class Vacancy:
             name=json_item['name'],
             url=json_item['alternate_url'],
             description=json_item['snippet']['requirement'],
+            area=area,
             salary_from=salary_from,
             salary_to=salary_to,
             currency=currency
@@ -69,6 +74,7 @@ class Vacancy:
             'name': self.name,
             'url': self.url,
             'description': self.description,
+            'area': self.area,
             'salary_from': self.salary_from,
             'salary_to': self.salary_to,
             'currency': self.currency
@@ -99,7 +105,7 @@ class Vacancy:
 
     def __ne__(self, other):
         """Not equal operator for comparison based on salary_from."""
-        return self.salary_from!= other.salary_from
+        return self.salary_from != other.salary_from
 
     def __gt__(self, other):
         """Greater than operator for comparison based on salary_from."""

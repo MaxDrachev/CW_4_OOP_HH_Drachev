@@ -1,5 +1,6 @@
 from data.class_HH import HHApi
-from data import class_Vacancy
+from data.class_Vacancy import Vacancy
+from data.JSON_saver import JSONSaver
 
 
 def get_vacancies_by_salary(vacancies_data: list, salary_range: str):
@@ -31,6 +32,17 @@ def sort_vacancies(vacancies_data: list):
     return sorted(vacancies_data, key=lambda x: x.salary_from, reverse=True)
 
 
+def get_filtered_vacancies(vacancies, filter_words):
+    """
+    фильтрация по ключивым словам (город)
+    """
+    filtered_by_keywords = []
+    for vacancy in vacancies:
+        if vacancy.area in filter_words:
+            filtered_by_keywords.append(vacancy)
+    return filtered_by_keywords
+
+
 def get_top_vacancies(vacancies_data: list, top_n):
     """
     Returns the top N vacancies from a sorted list.
@@ -45,27 +57,28 @@ def get_top_vacancies(vacancies_data: list, top_n):
 
 def user_interaction():
     """
-    Interacts with the user to perform operations on job vacancies fetched from HeadHunter.
-
-    Prompts the user for a search query, saves the fetched vacancies, and displays the top vacancies based on user-defined criteria.
+    функция основной логики
     """
     search_query = input("Введите ваш запрос (например Python): ")
+
     hh_api = HHApi()
-
-    vacancies_list = hh_api.get_vacancies(search_query)
-    top_n = int(input("Введите количество вакансий для вывода в топ N: "))
-    vacancies_by_city = input("Введите город: ").split()
-    salary_range = input("Введите диапазон зарплат: ")
-
-    data_manager = DataManager()
-    data_manager.save_vacancies(vacancies_list)
+    vacancies_from_hh = hh_api.get_vacancies(search_query)
+    vacancies_list = [Vacancy.from_json(vacancy) for vacancy in vacancies_from_hh]
 
     salary_range = input("Введите зарплату (Пример: 50000 - 350000): ")
+    top_n = int(input("Введите количество вакансий для вывода в топ N: "))
 
-    ranged_vacancies = get_vacancies_by_salary(vacancies_list, salary_range)
+    city_for_filter = input("Введите город: ").split()
+    filtered_vacancies_by_city = get_filtered_vacancies(vacancies_list, city_for_filter)
+
+    ranged_vacancies = get_vacancies_by_salary(filtered_vacancies_by_city, salary_range)
+
     sorted_vacancies = sort_vacancies(ranged_vacancies)
-    top_n = len(sorted_vacancies)  # Показываем все найденные вакансии, соответствующие критериям
+
     top_vacancies = get_top_vacancies(sorted_vacancies, top_n)
+
+    data_manager = JSONSaver()
+    data_manager.dump_to_file(ranged_vacancies)
 
     for i in top_vacancies:
         print(i)

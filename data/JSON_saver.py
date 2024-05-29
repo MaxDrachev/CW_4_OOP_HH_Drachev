@@ -17,7 +17,7 @@ class JSONSaver:
         full_path = os.path.join(ROOT_DIR, filename)  # Путь к файлу
 
         try:
-            vacancies_file = [vac.to_json() for vac in vacancies_objects]
+            vacancies_file = [vacancy.to_dict() for vacancy in vacancies_objects]
             with open(full_path, 'w', encoding='UTF-8') as file:
                 json.dump(vacancies_file, file, ensure_ascii=False, indent=4)
             print(f"Данные успешно сохранены в {full_path}")

@@ -78,7 +78,7 @@ def user_interaction():
     top_vacancies = get_top_vacancies(sorted_vacancies, top_n)
 
     data_manager = JSONSaver()
-    data_manager.dump_to_file(ranged_vacancies)
+    data_manager.dump_to_file(vacancies_list)
 
     for i in top_vacancies:
         print(i)

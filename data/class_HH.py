@@ -32,8 +32,3 @@ class HHApi(Parser):
             self.__params['page'] += 1
 
         return self.vacancies
-
-
-if __name__ == '__main__':
-    hh_1 = HHApi()
-    vac_hh_1 = hh_1.get_vacancies('python')

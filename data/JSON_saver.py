@@ -25,8 +25,3 @@ class JSONSaver:
             raise ValueError("Убедитесь, что каждый элемент vacancies имеет метод to_json.")
         except Exception as e:
             print(f"Произошла ошибка: {e}")
-
-
-if __name__ == '__main__':
-    vac = HHApi().get_vacancies("python")
-    JSONSaver().dump_to_file(vac)

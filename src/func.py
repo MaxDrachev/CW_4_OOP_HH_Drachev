@@ -5,12 +5,7 @@ from data.JSON_saver import JSONSaver
 
 def get_vacancies_by_salary(vacancies_data: list, salary_range: str):
     """
-    Filters vacancies within a specified salary range.
-
-    :param vacancies_data: List of Vacancy objects to filter.
-    :param salary_range: String specifying the minimum and maximum salary values.
-
-    :return: Filtered list of Vacancy objects within the salary range.
+    сортировка вакансий по валидному интервалу зарплат.
     """
     min_salary, max_salary = map(int, salary_range.split('-'))
     ranged_vacancies = []
@@ -23,11 +18,7 @@ def get_vacancies_by_salary(vacancies_data: list, salary_range: str):
 
 def sort_vacancies(vacancies_data: list):
     """
-    Sorts a list of vacancies by their starting salary in descending order.
-
-    :param vacancies_data: List of Vacancy objects to sort.
-
-    :return: Sorted list of Vacancy objects.
+    сортировка по ключу зп от большего к меньшему.
     """
     return sorted(vacancies_data, key=lambda x: x.salary_from, reverse=True)
 
@@ -45,12 +36,7 @@ def get_filtered_vacancies(vacancies, filter_words):
 
 def get_top_vacancies(vacancies_data: list, top_n):
     """
-    Returns the top N vacancies from a sorted list.
-
-    :param vacancies_data: Sorted list of Vacancy objects.
-    :param top_n: Number of top vacancies to return.
-
-    :return: Top N Vacancy objects.
+    функция фозвращает топ вакансий.
     """
     return vacancies_data[:top_n]
 

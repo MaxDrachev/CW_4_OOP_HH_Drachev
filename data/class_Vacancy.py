@@ -1,23 +1,8 @@
-from data.class_HH import HHApi
-
-
 class Vacancy:
-    """
-    Represents a job vacancy with details such as name, URL, description, salary range, and currency.
-
-    Includes methods  for comparing Vacancy objects based on their starting salary for sorting purposes.
-    """
 
     def __init__(self, name, url, description, area, salary_from, salary_to, currency):
         """
-        Initializes a new Vacancy object.
-
-        :param name: Name of the job vacancy.
-        :param url: URL of the job posting.
-        :param description: Description of the job requirements.
-        :param salary_from: Starting salary value.
-        :param salary_to: Ending salary value.
-        :param currency: Currency of the salary.
+        Инициализация объекта вакансия.
         """
         self.name = name
         self.url = url
@@ -29,9 +14,7 @@ class Vacancy:
 
     def __str__(self):
         """
-        Returns a string representation of the Vacancy object.
-
-        :return: Human-readable string representation of the Vacancy.
+        Вывод информации об объекте.
         """
         return f'Вакансия: {self.name}\n' \
                f'Город: {self.area}\n' \
@@ -41,11 +24,7 @@ class Vacancy:
     @staticmethod
     def from_json(json_item):
         """
-        Creates a Vacancy object from a JSON item.
-
-        :param json_item: JSON item representing a job vacancy.
-
-        :return: Vacancy object initialized with data from the JSON item.
+        Создание объекта из полученого JSON словаря.
         """
         area_info = json_item.get('area')
         area = area_info['name'] if area_info and 'name' in area_info else None
@@ -66,9 +45,7 @@ class Vacancy:
 
     def to_dict(self):
         """
-        Converts the Vacancy object to a dictionary.
-
-        :return: Dictionary representation of the Vacancy object.
+        Конвертация объекта в словарь
         """
         return {
             'name': self.name,
@@ -83,11 +60,7 @@ class Vacancy:
     @classmethod
     def from_dict(cls, dict_item):
         """
-        Creates a Vacancy object from a dictionary.
-
-        :param dict_item: Dictionary representing a job vacancy.
-
-        :return: Vacancy object initialized with data from the dictionary.
+        создание объекта из словаря.
         """
         return cls(**dict_item)
 
@@ -114,10 +87,3 @@ class Vacancy:
     def __ge__(self, other):
         """Greater than or equal to operator for comparison based on salary_from."""
         return self.salary_from >= other.salary_from
-
-
-if __name__ == '__main__':
-    vac_1 = HHApi()
-    vac_json = vac_1.get_vacancies('python')
-    vacancies = [Vacancy.from_json(i) for i in vac_json]
-    print(vacancies)

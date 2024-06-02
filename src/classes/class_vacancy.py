@@ -1,4 +1,14 @@
 class Vacancy:
+    """
+    Класс вакансия с полями имя, ссылка, описание, месторасположение, зарплата от и до, валюта
+    """
+    name: str
+    url: str
+    description: str
+    area: str
+    salary_from: int
+    salary_to: int
+    currency: str
 
     def __init__(self, name, url, description, area, salary_from, salary_to, currency):
         """
@@ -45,7 +55,7 @@ class Vacancy:
 
     def to_dict(self):
         """
-        Конвертация объекта в словарь
+        Конвертация параметров объекта в словарь
         """
         return {
             'name': self.name,
@@ -63,27 +73,3 @@ class Vacancy:
         создание объекта из словаря.
         """
         return cls(**dict_item)
-
-    def __lt__(self, other):
-        """Less than operator for comparison based on salary_from."""
-        return self.salary_from < other.salary_from
-
-    def __le__(self, other):
-        """Less than or equal to operator for comparison based on salary_from."""
-        return self.salary_from <= other.salary_from
-
-    def __eq__(self, other):
-        """Equality operator for comparison based on salary_from."""
-        return self.salary_from == other.salary_from
-
-    def __ne__(self, other):
-        """Not equal operator for comparison based on salary_from."""
-        return self.salary_from != other.salary_from
-
-    def __gt__(self, other):
-        """Greater than operator for comparison based on salary_from."""
-        return self.salary_from > other.salary_from
-
-    def __ge__(self, other):
-        """Greater than or equal to operator for comparison based on salary_from."""
-        return self.salary_from >= other.salary_from

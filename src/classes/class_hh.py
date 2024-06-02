@@ -1,18 +1,22 @@
 import requests
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Parser(ABC):
 
-    def load_vacancies(self, keyword):
+    @abstractmethod
+    def get_vacancies(self, keyword):
         pass
 
 
 class HHApi(Parser):
     """
     Класс для работы с API HeadHunter
-    Класс Parser является родительским классом, который вам необходимо реализовать
     """
+    url: str
+    headers: dict
+    __params: dict
+    vacancies: list
 
     def __init__(self):
         self.url = 'https://api.hh.ru/vacancies'
@@ -20,7 +24,10 @@ class HHApi(Parser):
         self.__params = {'text': '', 'area': '113', 'page': 0, 'per_page': 100}
         self.vacancies = []
 
-    def get_vacancies(self, keyword):
+    def get_vacancies(self, keyword: str) -> list:
+        """
+        Функция получения списка вакансий с api hh, по основному параметру 'text'
+        """
         self.__params['text'] = keyword
         while self.__params.get('page') != 20:
             response = requests.get(self.url, headers=self.headers, params=self.__params)

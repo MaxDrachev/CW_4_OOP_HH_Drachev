@@ -3,7 +3,7 @@ from src.classes.class_vacancy import Vacancy
 from src.classes.json_saver import JSONSaver
 
 
-def get_vacancies_by_salary(vacancies_data: list, salary_range: str):
+def get_vacancies_by_salary(vacancies_data: list, salary_range: str) -> list:
     """
     сортировка вакансий по валидному интервалу зарплат.
     """
@@ -16,7 +16,7 @@ def get_vacancies_by_salary(vacancies_data: list, salary_range: str):
     return ranged_vacancies
 
 
-def sort_vacancies(vacancies_data: list):
+def sort_vacancies(vacancies_data: list) -> list:
     """
     сортировка по ключу зп от большего к меньшему.
     """
@@ -24,7 +24,7 @@ def sort_vacancies(vacancies_data: list):
     return sort_vac
 
 
-def get_filtered_vacancies(vacancies, filter_words):
+def get_filtered_vacancies(vacancies, filter_words) -> list:
     """
     фильтрация по городу
     """
@@ -35,7 +35,7 @@ def get_filtered_vacancies(vacancies, filter_words):
     return filtered_by_keywords
 
 
-def get_top_vacancies(vacancies_data: list, top_n):
+def get_top_vacancies(vacancies_data: list, top_n) -> list:
     """
     функция возвращает топ вакансий.
     """

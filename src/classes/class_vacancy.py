@@ -32,7 +32,7 @@ class Vacancy:
                f'Зарплата от {self.salary_from} до {self.salary_to} {self.currency}\n'
 
     @staticmethod
-    def from_json(json_item):
+    def from_json(json_item) -> object:
         """
         Создание объекта из полученого JSON словаря.
         """
@@ -53,7 +53,7 @@ class Vacancy:
             currency=currency
         )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """
         Конвертация параметров объекта в словарь
         """
@@ -68,7 +68,7 @@ class Vacancy:
         }
 
     @classmethod
-    def from_dict(cls, dict_item):
+    def from_dict(cls, dict_item: dict) -> object:
         """
         создание объекта из словаря.
         """
